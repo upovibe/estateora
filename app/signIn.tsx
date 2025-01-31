@@ -25,7 +25,7 @@ const SignIn = () => {
     if (result) {
       refetch({}); // Pass an empty object as the argument
     } else {
-      Alert.alert("Error", "Failed to login");
+      Alert.alert("Error", "Failed to login. Please check your credentials and try again.");
     }
   };
 
@@ -70,7 +70,7 @@ const SignIn = () => {
         {/* Sign In Button */}
         <View className="flex items-center justify-center w-full gap-2 mt-8">
           <TouchableOpacity
-            onPress={handleSignIn} // Disable button while loading
+            onPress={handleSignIn}
             className="bg-primary-300 px-8 py-3 rounded-full flex flex-row items-center justify-center gap-2 shadow-md shadow-blue-500"
           >
             <Image source={icons.google} className="w-6 h-6" />
