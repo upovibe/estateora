@@ -1,12 +1,29 @@
-import React from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, Text, ScrollView, Image, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
+import { login } from "@/lib/appwrite";
 
 const SignIn = () => {
-  const handleSignIn = () => {
-    // Handle sign-in logic here
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSignIn = async () => {
+    setIsLoading(true); // Start loading
+    try {
+      const result = await login();
+      if (result) {
+        console.log("Login successful");
+        // Navigate to another screen (e.g., home screen)
+      } else {
+        Alert.alert("Error", "Login failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      Alert.alert("Error", "An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false); // Stop loading
+    }
   };
 
   return (
@@ -51,12 +68,19 @@ const SignIn = () => {
         <View className="flex items-center justify-center w-full gap-2 mt-8">
           <TouchableOpacity
             onPress={handleSignIn}
+            disabled={isLoading} // Disable button while loading
             className="bg-primary-300 px-8 py-3 rounded-full flex flex-row items-center justify-center gap-2 shadow-md shadow-blue-500"
           >
-            <Image source={icons.google} className="w-6 h-6" />
-            <Text className="text-white font-rubik-medium text-lg">
-              Login with Google
-            </Text>
+            {isLoading ? (
+              <ActivityIndicator color="#FFFFFF" /> // Show spinner while loading
+            ) : (
+              <>
+                <Image source={icons.google} className="w-6 h-6" />
+                <Text className="text-white font-rubik-medium text-lg">
+                  Login with Google
+                </Text>
+              </>
+            )}
           </TouchableOpacity>
         </View>
       </ScrollView>
