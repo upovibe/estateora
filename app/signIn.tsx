@@ -21,11 +21,21 @@ const SignIn = () => {
   if (!loading && isLogged) return <Redirect href="/" />;
 
   const handleSignIn = async () => {
-    const result = await login();
-    if (result) {
-      refetch({}); // Pass an empty object as the argument
-    } else {
-      Alert.alert("Error", "Failed to login. Please check your credentials and try again.");
+    console.log("Attempting to sign in...");
+    try {
+      const result = await login();
+      
+      if (result) {
+        console.log("Login successful!");
+        Alert.alert("Success", "You have successfully signed in!");
+        refetch({}); // Refresh user state
+      } else {
+        console.log("Login failed!");
+        Alert.alert("Error", "Failed to login. Please try again.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      Alert.alert("Error", "An unexpected error occurred. Please try again.");
     }
   };
 
