@@ -1,28 +1,31 @@
-import React, { useState } from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import images from "@/constants/images";
-import icons from "@/constants/icons";
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
 import { login } from "@/lib/appwrite";
+import { Redirect } from "expo-router";
+import { useGlobalContext } from "@/lib/global-provider";
+import icons from "@/constants/icons";
+import images from "@/constants/images";
 
 const SignIn = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { refetch, loading, isLogged } = useGlobalContext();
+
+  if (!loading && isLogged) return <Redirect href="/" />;
 
   const handleSignIn = async () => {
-    setIsLoading(true); // Start loading
-    try {
-      const result = await login();
-      if (result) {
-        console.log("Login successful");
-        // Navigate to another screen (e.g., home screen)
-      } else {
-        Alert.alert("Error", "Login failed. Please try again.");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      Alert.alert("Error", "An unexpected error occurred. Please try again.");
-    } finally {
-      setIsLoading(false); // Stop loading
+    const result = await login();
+    if (result) {
+      refetch({}); // Pass an empty object as the argument
+    } else {
+      Alert.alert("Error", "Failed to login");
     }
   };
 
@@ -67,20 +70,13 @@ const SignIn = () => {
         {/* Sign In Button */}
         <View className="flex items-center justify-center w-full gap-2 mt-8">
           <TouchableOpacity
-            onPress={handleSignIn}
-            disabled={isLoading} // Disable button while loading
+            onPress={handleSignIn} // Disable button while loading
             className="bg-primary-300 px-8 py-3 rounded-full flex flex-row items-center justify-center gap-2 shadow-md shadow-blue-500"
           >
-            {isLoading ? (
-              <ActivityIndicator color="#FFFFFF" /> // Show spinner while loading
-            ) : (
-              <>
-                <Image source={icons.google} className="w-6 h-6" />
-                <Text className="text-white font-rubik-medium text-lg">
-                  Login with Google
-                </Text>
-              </>
-            )}
+            <Image source={icons.google} className="w-6 h-6" />
+            <Text className="text-white font-rubik-medium text-lg">
+              Login with Google
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
