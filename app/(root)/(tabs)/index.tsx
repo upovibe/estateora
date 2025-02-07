@@ -10,7 +10,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text className="font-bold mb-10 font-rubik text-3xl">Welcome to  App!</Text>
+      <Text className="font-bold mb-10 font-rubik text-3xl">Welcome to the App!</Text>
     </View>
   );
 }
