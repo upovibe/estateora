@@ -3,6 +3,7 @@ import icons from "@/constants/icons";
 import images from "@/constants/images";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import {
+  ActivityIndicator,
   Button,
   FlatList,
   Image,
@@ -20,6 +21,7 @@ import seed from "@/lib/seed";
 import { useAppwrite } from "@/lib/useAppwrite";
 import { getLatestProperties, getProperties } from "@/lib/appwrite";
 import { useEffect } from "react";
+import NoResults from "@/components/NoResults";
 
 export default function Index() {
   const { user } = useGlobalContext();
@@ -65,6 +67,13 @@ export default function Index() {
         contentContainerClassName="pb-32 "
         columnWrapperClassName="flex justify-between"
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          loading ? (
+            <ActivityIndicator size="large" className="text-primary-300 mt-5" />
+          ) : (
+            <NoResults />
+          )
+        }
         ListHeaderComponent={
           <View>
             {/* Header Section */}
@@ -107,20 +116,26 @@ export default function Index() {
                 </TouchableOpacity>
               </View>
             </View>
-            <FlatList
-              data={latestProperties}
-              renderItem={({ item }) => (
-                <FeaturedCard
-                  item={item}
-                  onPress={() => handleCardPress(item.$id)}
-                />
-              )}
-              keyExtractor={(item) => item.$id} // Fixed: Use item.$id
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              bounces={false}
-              contentContainerClassName="flex gap-5 "
-            />
+            {latestPropertiesLoading ? (
+              <ActivityIndicator size="large" className="text-primary-300" />
+            ) : !latestProperties || latestProperties.length === 0 ? (
+              <NoResults />
+            ) : (
+              <FlatList
+                data={latestProperties}
+                renderItem={({ item }) => (
+                  <FeaturedCard
+                    item={item}
+                    onPress={() => handleCardPress(item.$id)}
+                  />
+                )}
+                keyExtractor={(item) => item.$id} // Fixed: Use item.$id
+                horizontal
+                bounces={false}
+                showsHorizontalScrollIndicator={false}
+                contentContainerClassName="flex gap-5 "
+              />
+            )}
 
             {/* recommended Section */}
             <View className="my-5">
