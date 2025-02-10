@@ -90,11 +90,14 @@ export default function Explore() {
             <SearchBar />
 
             {/* Filters */}
-            <View>
+            <View className="flex flex-col my-2 gap-5">
               <Filters />
-              <Text className="text-lg font-rubik-bold text-black-300 mt-4">
-                Found {properties?.length} results for "{params.query}"
-              </Text>
+              {/* Conditionally render the "Found X results" text */}
+              {params.query && (
+                <Text className="text-lg font-rubik-bold text-black-300">
+                  Found {properties?.length} results for "{params.query}"
+                </Text>
+              )}
             </View>
           </View>
         }
