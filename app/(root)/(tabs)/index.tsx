@@ -62,7 +62,7 @@ export default function Index() {
         renderItem={({ item }) => (
           <Card item={item} onPress={() => handleCardPress(item.$id)} />
         )}
-        keyExtractor={(item) => item.$id} // Fixed: Use item.$id
+        keyExtractor={(item) => item.$id}
         numColumns={2}
         contentContainerClassName="pb-32 "
         columnWrapperClassName="flex justify-between"
@@ -129,7 +129,7 @@ export default function Index() {
                     onPress={() => handleCardPress(item.$id)}
                   />
                 )}
-                keyExtractor={(item) => item.$id} // Fixed: Use item.$id
+                keyExtractor={(item) => item.$id}
                 horizontal
                 bounces={false}
                 showsHorizontalScrollIndicator={false}
