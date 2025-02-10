@@ -3,6 +3,7 @@ import icons from "@/constants/icons";
 import images from "@/constants/images";
 import { Link } from "expo-router";
 import {
+  Button,
   FlatList,
   Image,
   ScrollView,
@@ -15,6 +16,7 @@ import { Card } from "@/components/Cards";
 import { FeaturedCard } from "@/components/FeaturedCard";
 import Filters from "@/components/Filters";
 import { useGlobalContext } from "@/lib/global-provider";
+import seed from "@/lib/seed";
 
 export default function Index() {
   const { user } = useGlobalContext();
@@ -22,6 +24,7 @@ export default function Index() {
   return (
     // SafeAreaView ensures content does not overlap with device notches/status bar
     <SafeAreaView className="bg-white h-full px-7">
+      <Button title="Seed" onPress={seed} />
       <FlatList
         data={[1, 2, 3, 4]}
         renderItem={({ item }) => <Card />}
