@@ -138,7 +138,7 @@ export default function Index() {
             )}
 
             {/* recommended Section */}
-            <View className="my-5">
+            <View className="flex flex-col my-5 gap-5">
               <View className="flex flex-row items-center justify-between">
                 <Text className="text-xl font-rubik-bold text-black">
                   Recommendation
