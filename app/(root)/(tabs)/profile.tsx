@@ -62,7 +62,7 @@ const Profile = () => {
     <SafeAreaView>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerClassName="pb-32 px-7"
+        contentContainerClassName="pb-32 px-5"
       >
         {/* Header */}
         <View className="flex flex-row items-center justify-between mt-5">

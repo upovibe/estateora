@@ -103,12 +103,14 @@ import { View, Text, Image, TouchableOpacity, Animated } from "react-native";
 import React, { useRef } from "react";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
+import { Models } from "react-native-appwrite";
 
 interface Props {
+  item: Models.Document;
   onPress?: () => void;
 }
 
-export const Card = ({ onPress }: Props) => {
+export const Card = ({item: {name, image, rating, address, price}, onPress }: Props) => {
   const scaleValue = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
@@ -139,7 +141,7 @@ export const Card = ({ onPress }: Props) => {
         <View className="flex flex-col gap-2">
           <View>
             <Image
-              source={images.newYork}
+              source={{ uri:image }}
               className="w-full h-40 rounded-lg"
               resizeMode="cover"
             />
@@ -147,7 +149,7 @@ export const Card = ({ onPress }: Props) => {
             <View className="absolute top-3 right-3 flex flex-row gap-1 items-center bg-white/90 px-3 py-1 rounded-full shadow-sm">
               <Image source={icons.star} className="size-3.5" />
               <Text className="text-sm font-rubik-bold text-primary-300">
-                5.0
+              {rating}
               </Text>
             </View>
           </View>
@@ -158,16 +160,16 @@ export const Card = ({ onPress }: Props) => {
                 className="text-xl font-rubik-extrabold text-black-300"
                 numberOfLines={1}
               >
-                Modern Apartment
+                {name}
               </Text>
               <Text className="text-base font-rubik text-black-200/90">
-                22 W 15th St, New York
+              {address}
               </Text>
             </View>
 
             <View className="flex items-center flex-row justify-between w-full">
               <Text className="text-xl font-rubik-extrabold text-primary-300">
-                $2,500
+              ${price}
               </Text>
               <TouchableOpacity className="flex flex-row items-center bg-primary-300/50 backdrop-blur-md rounded-full p-2 shadow-lg">
                 <Image source={icons.heart} className="size-5" />

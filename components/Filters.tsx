@@ -34,7 +34,7 @@ const Filters = () => {
           className={`flex flex-col items-start mr-4 px-4 py-2 rounded-full ${
             selectedCategory === item.category
               ? "bg-primary-300"
-              : "bg-primary-100 border border-primary-200"
+              : "bg-gray-200 "
           }`}
         >
           <Text
