@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Card } from "@/components/Cards";
+import { Card, HorizontalCard } from "@/components/Cards";
 import Filters from "@/components/Filters";
 import { useAppwrite } from "@/lib/useAppwrite";
 import { getProperties } from "@/lib/appwrite";
@@ -49,7 +49,7 @@ export default function Explore() {
       <FlatList
         data={properties}
         renderItem={({ item }) => (
-          <Card item={item} onPress={() => handleCardPress(item.$id)} />
+          <HorizontalCard item={item} onPress={() => handleCardPress(item.$id)} />
         )}
         keyExtractor={(item) => item.$id}
         numColumns={2}
